@@ -1,5 +1,10 @@
+/* * {
+  background-color: black;
+} */
+
 .outline {
   outline-style: dashed;
   outline-color: red;
   outline-width: 2px
 }
+
