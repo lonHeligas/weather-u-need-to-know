@@ -23,98 +23,63 @@
     <link rel="stylesheet" href="./assets/css/styles.css" />
   </head>
   <body>
-    <header class="container contatiner-fluid outline mb-5 bg-dark text-light">
+    <!-- top banner -->
+    <header class="container contatiner-fluid outline mb-5 text-dark">
       <h1>Weather U Need to Know</h1>
     </header>
-
-    <section
-      id="interactivePage"
-      class="outline container contatiner-fluid bg-dark text-light"
-    >
+    <!-- bottom section -->
+    <div class="container outline col-12">
       <div class="row">
-        <div id="citySearch" class="container">
-          <div id="textEntry" class="row">
-            <p>Enter City Here</p>
-          </div>
-          <div id="searchButton" class="row">
-            <p>search</p>
-          </div>
-          <section id="cityHistory" class="container">
-            <div id="cityButton" class="row">
-              <p>Button Of City</p>
-            </div>
-          </section>
+      <!-- lef side panel -->
+      <div class="container column outline col-4">       
+        <div class="row">
+          <p>search for a city</p>
         </div>
-      
-        
-        <div id="forecastCentral" class="container bg-dark text-light">
-          <div id="cityWeather" class="container mb-5 pb-5">
-          <div id="cityWeatherCurrent" class="row">
-            <h2>Saint Paul</h2>
-          </div>
+        <div class="row">
+          <p>Search box</p>
         </div>
-        <div id="fiveDayForecast" class="container bg-dark text-light">
-          <div class="row">
-            <div id="dayCard" class="col-12 col-md-8 col-lg-2">
-              <h3>Title</h3>
-              <h5>
-                3/12 columns on large, 6/12 columns on medium, full-width on
-                small
-              </h5>
-              <p>
-                minus, quam libero in ab obcaecati praesentium hic ipsum
-                possimus voluptate modi eius?
-              </p>
-            </div>
-            <div id="dayCard" class="col-12 col-md-8 col-lg-2">
-              <h3>Title</h3>
-              <h5>
-                3/12 columns on large, 6/12 columns on medium, full-width on
-                small
-              </h5>
-              <p>
-                minus, quam libero in ab obcaecati praesentium hic ipsum
-                possimus voluptate modi eius?
-              </p>
-            </div>
-            <div id="dayCard" class="col-12 col-md-8 col-lg-2">
-              <h3>Title</h3>
-              <h5>
-                3/12 columns on large, 6/12 columns on medium, full-width on
-                small
-              </h5>
-              <p>
-                minus, quam libero in ab obcaecati praesentium hic ipsum
-                possimus voluptate modi eius?
-              </p>
-            </div>
-            <div id="dayCard" class="col-12 col-md-8 col-lg-2">
-              <h3>Title</h3>
-              <h5>
-                3/12 columns on large, 6/12 columns on medium, full-width on
-                small
-              </h5>
-              <p>
-                minus, quam libero in ab obcaecati praesentium hic ipsum
-                possimus voluptate modi eius?
-              </p>
-            </div>
-            <div id="dayCard" class="col-12 col-md-8 col-lg-2">
-              <h3>Title</h3>
-              <h5>
-                3/12 columns on large, 6/12 columns on medium, full-width on
-                small
-              </h5>
-              <p>
-                minus, quam libero in ab obcaecati praesentium hic ipsum
-                possimus voluptate modi eius?
-              </p>
-            </div>
+        <div class="row">
+          <p>search button</p>
+        </div>
+        <div class="hr border"></div>
+        <div class="row">
+          <p>city button</p>
+        </div>
+      </div>
+      <!-- right side panel -->
+      <div class="container column outline col-8">        
+        <div class="row outline">
+          <p>City forecast</p>
+        </div>
+        <div class="row outline">
+          <p>5-Day Forecast</p>
+        </div>
+        <!-- 5 day forecast cards -->
+        <div class="row outline align-items-left">
+          <div class=" container column outline col-2">
+            <p>day panel</p>
+          </div>
+          <div class=" container column outline col-2">
+            <p>day panel</p>
+          </div>
+          <div class=" container column outline col-2">
+            <p>day panel</p>
+          </div>
+          <div class=" container column outline col-2">
+            <p>day panel</p>
+          </div>
+          <div class=" container column outline col-2">
+            <p>day panel</p>
           </div>
         </div>
       </div>
     </div>
-    </section>
+
+
+
+
+    </div>
+    
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script
