@@ -35,21 +35,24 @@
         <div class="row">
           <p>search for a city</p>
         </div>
-        <div class="row">
+        <input class="row" for="city-name" id="userCityRequest">
           <p>Search box</p>
-        </div>
-        <div class="row">
+        </input>
+        <button class="row" id="searchButton">
           <p>search button</p>
-        </div>
+        </button>
         <div class="hr border"></div>
-        <div class="row">
+        <button class="row" id="cityButton"> 
           <p>city button</p>
-        </div>
+        </button>
       </div>
       <!-- right side panel -->
       <div class="container column outline col-8">        
         <div class="row outline">
-          <p>City forecast</p>
+          <p id="live-city"></p>
+          <p id="live-temperature">Temp:</p>
+          <p id="live-windSpeed"> Wind:</p>
+          <p id="live-humidity">Humidity:</p>
         </div>
         <div class="row outline">
           <p>5-Day Forecast</p>
@@ -57,7 +60,10 @@
         <!-- 5 day forecast cards -->
         <div class="row outline align-items-left">
           <div class=" container column outline col-2">
-            <p>day panel</p>
+            <p id="futureDate">date</p>            
+            <p id="futureTemperature">Temp:</p>
+            <p id="futureWindSpeed"> Wind:</p>
+            <p id="futureHumidity">Humidity:</p>
           </div>
           <div class=" container column outline col-2">
             <p>day panel</p>
