@@ -79,8 +79,34 @@ function receiveCurrPayload (response){
 
 function receiveFuturePayload(response){
   response.json().then(function (data) {
-    console.log(data)
+    // the date we're looking at during the reduce
+    let futureDay = ''
+    const dailyData = data.list.reduce(function(result, value){
+      console.log('reduce is looking at ', value)
+      console.log('its day is ', moment(value.dt_txt).format('M/Do/YYYY'))
+      const dataDate = moment(value.dt_txt).format('M/Do/YYYY')
+      if(dataDate != futureDay){
+        // add to array
+        result.push(value)
+        // update futureDay to tell us to keep going until we hit a new day 
+        futureDay = dataDate
+      }
+      return result
+    }, [])
+    console.log('reduced data', dailyData)
+
+    // if less than 5 .day-cards, clone the first until theres 5
+    // while($('.day-card).length < 5){
+    //  $('.day-cards').append($('.day-card').first().clone())
+    //}
+
+    //loop from 0 to 4 on the daily data and populate each div
+    // for(var i = 0; i<4 i++){
+      // populate each field for each data
+    //}
   })
+
+
 }
 
 
