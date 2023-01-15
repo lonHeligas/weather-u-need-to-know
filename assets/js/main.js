@@ -16,12 +16,13 @@ let futureHumidityEl = $('#uture-humidity');
 let dayCardEl = $('day-card');
 
 let incomingHistory = localStorage.getItem("cityHistory");
-let incomingCityHihstory = [];
+let incomingCityHistory = [];
 let userCitySearch = $('#userCityRequest');
 let btnSearch = $('#searchButton');
 let btnCity = $('#cityButton');
 let citySearch = "";
 let cardArray = [];
+let searchHistory = [];
 
 let dateRaw = moment();
 
@@ -36,7 +37,7 @@ function getCityHistory (){
   try{
     incomingCityHsitory = JSON.parse(incomingCityHistory)
   } catch(e){
-    schedule = [];
+    searchHistory = [];
   };
   console.log(incomingCityHihstory);
 
@@ -71,7 +72,7 @@ function receiveCurrPayload (response){
     // ~ console.log(liveIconURL);
 
     // *posts the information to the DOM
-    liveCityEl.text(`${liveCity}  (${dateRaw.format('M/Do/YYYY')})`);         
+    liveCityEl.text(`${liveCity}  (${dateRaw.format('M/Do/YYYY')})     `);         
     iconEl.attr('src', liveIconURL).height("50px").width("50px");          
     liveTempEl.text(`Temp: ${liveTemp} °F`);
     liveWindSpeedEl.text(`Wind: ${liveWind} MPH`);
@@ -100,14 +101,9 @@ function receiveFuturePayload(response){
     // logs the reduced array of one item for each day
     console.log('reduced data', dailyData)
 
-    if (cardArray.length != 4){
-      for (i=0; i<=4; i++){
-        cardArray[i] = dayCardEl;
-        console.log(cardArray)
-        
-
-      }
-    }
+    // if (cardArray.length < 5){
+    //   while()
+    // }
 
     
     
@@ -143,25 +139,13 @@ function getWeatherData(){
   fetch(forecastApiURL)
   .then(receiveFuturePayload);
 
-
-
-
-
-    
-
-
-
-
-
-
 // $('#live-temperature');
 // $('#live-windSpeed');
 // $('#live-humidity');
 // $('live-city');
 
       // console.log(liveTempEl);
-    
-    
+       
 }
 
 // TODO get the 5 day forecast and build out the day cards
@@ -181,9 +165,27 @@ function searchButtonListen(){
     // *console.log('you clicked search!') ;
     // TODO store the city name and build the button
     getWeatherData()
+    citySearch 
+    // searches the search history array 
+    if (searchHistory.includes(citySearch)){
+      // *console.log ("no");
+      
+    } else {
+      // *console.log ("yes"); 
+      searchHistory.push(citySearch);
+      addCityButton();
+      // *console.log(searchHistory);
+      localStorage.setItem("cityHistory", JSON.stringify(searchHistory));
+
+    }
 
 
   })
+}
+
+function addCityButton(){
+
+
 }
 
 function cityButtonListen(){
