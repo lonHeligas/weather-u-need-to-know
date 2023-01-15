@@ -7,7 +7,13 @@ let liveCityEl = $('#live-city');
 let iconEl = $('#icon');
 let liveTempEl = $('#live-temperature');
 let liveWindSpeedEl = $('#live-windSpeed');
-let liveHumidityEl = $('#live-humidity');
+let liveHumidityEl = $('live-humidity');
+
+let futureIconEl = $('future-icon');
+let futureTempEl = $('future-temperature');
+let futureWindSpeedEl = $('future-windSpeed');
+let futureHumidityEl = $('#uture-humidity');
+
 let incomingHistory = localStorage.getItem("cityHistory");
 let incomingCityHihstory = [];
 let userCitySearch = $('#userCityRequest');
@@ -16,6 +22,7 @@ let btnCity = $('#cityButton');
 let citySearch = "";
 
 let dateRaw = moment();
+
 
 
 
@@ -35,54 +42,69 @@ function getCityHistory (){
 }
 
 
+function receiveCurrPayload (response){
+  response.json().then(function (data) {
+    // ~console.log(data)
+    
+  // TODO logging out the variables to confirm their existence/layout
+    
+    // ~ console.log(data.name);
+    // ~ console.log(data.main.temp);
+    // ~ console.log(data.wind.speed);
+
+    // ? establishes the variables for the panel
+
+    var liveCity = data.name;
+    var liveIconId = data.weather[0].icon;
+    var liveTemp = data.main.temp;
+    var liveWind = data.wind.speed;
+    var liveHumid = data.main.humidity;
+
+    var liveIconURL = `http://openweathermap.org/img/w/${liveIconId}.png`;
+    
+    // ~ console.log(liveCity);
+    // ~ console.log(liveTemp);
+    // ~ console.log(liveWind);
+    // ~ console.log(liveHumid);
+    // ~ console.log(liveIconURL);
+
+    // *posts the information to the DOM
+    liveCityEl.text(`${liveCity}  (${dateRaw.format('M/Do/YYYY')})`);         
+    iconEl.attr('src', liveIconURL);          
+    liveTempEl.text(`Temp: ${liveTemp} °F`);
+    liveWindSpeedEl.text(`Wind: ${liveWind} MPH`);
+    liveHumidityEl.text(`Humidity: ${liveHumid}%`);
+  })
+}
+
+function receiveFuturePayload(response){
+  response.json().then(function (data) {
+    console.log(data)
+  })
+}
+
+
+
 
 
 
 // gets the weather data from the API
-
-
 function getWeatherData(){  
-
-  var apiURL = `https://api.openweathermap.org/data/2.5/weather?q=${citySearch}&appid=${apiKey}&units=imperial`
+  var liveApiURL = `https://api.openweathermap.org/data/2.5/weather?q=${citySearch}&appid=${apiKey}&units=imperial`;  
   // *console.log(apiURL);
 
-  fetch(apiURL)
-    .then(function (response) {
-      return response.json();
-    })
-    .then(function (data) {
-      console.log(data)
-  
-    // TODO logging out the variables to confirm their existence/layout
-      // ~ console.log(data.name);
-      // ~ console.log(data.main.temp);
-      // ~ console.log(data.wind.speed);
+  var forecastApiURL = `https://api.openweathermap.org/data/2.5/forecast?q=${citySearch}&appid=${apiKey}&units=imperial`;
 
-      // ? establishes the variables for the panel
-
-      var liveCity = data.name;
-      var liveIconId = data.weather[0].icon;
-      var liveTemp = data.main.temp;
-      var liveWind = data.wind.speed;
-      var liveHumid = data.main.humidity;
-
-      const liveIcon = `http://openweathermap.org/img/w/${liveIconId}.png`
-
-      // ~ console.log(liveCity);
-      // ~ console.log(liveTemp);
-      // ~ console.log(liveWind);
-      // ~ console.log(liveHumid);
-      console.log(liveIcon);
-
-      // *posts the information to the DOM
-      liveCityEl.text(liveCity);         
-      liveIconEl = liveIcon;
-          
-      liveTempEl.text(`Temp: ${liveTemp} °F`);
-      liveWindSpeedEl.text(`Wind: ${liveWind} MPH`);
-      liveHumidityEl.text(`Humidity: ${liveHumid}%`);
+  fetch(liveApiURL)
+  .then(receiveCurrPayload);
+  fetch(forecastApiURL)
+  .then(receiveFuturePayload);
 
 
+
+
+
+    
 
 
 
@@ -96,7 +118,7 @@ function getWeatherData(){
 
       // console.log(liveTempEl);
     
-    });
+    
 }
 
 // TODO get the 5 day forecast and build out the day cards
