@@ -13,6 +13,7 @@ let futureIconEl = $('future-icon');
 let futureTempEl = $('future-temperature');
 let futureWindSpeedEl = $('future-windSpeed');
 let futureHumidityEl = $('#uture-humidity');
+let dayCardEl = $('day-card');
 
 let incomingHistory = localStorage.getItem("cityHistory");
 let incomingCityHihstory = [];
@@ -20,6 +21,7 @@ let userCitySearch = $('#userCityRequest');
 let btnSearch = $('#searchButton');
 let btnCity = $('#cityButton');
 let citySearch = "";
+let cardArray = [];
 
 let dateRaw = moment();
 
@@ -70,7 +72,7 @@ function receiveCurrPayload (response){
 
     // *posts the information to the DOM
     liveCityEl.text(`${liveCity}  (${dateRaw.format('M/Do/YYYY')})`);         
-    iconEl.attr('src', liveIconURL);          
+    iconEl.attr('src', liveIconURL).height("50px").width("50px");          
     liveTempEl.text(`Temp: ${liveTemp} °F`);
     liveWindSpeedEl.text(`Wind: ${liveWind} MPH`);
     liveHumidityEl.text(`Humidity: ${liveHumid}%`);
@@ -81,19 +83,34 @@ function receiveFuturePayload(response){
   response.json().then(function (data) {
     // the date we're looking at during the reduce
     let futureDay = ''
+
     const dailyData = data.list.reduce(function(result, value){
-      console.log('reduce is looking at ', value)
-      console.log('its day is ', moment(value.dt_txt).format('M/Do/YYYY'))
+
+      // *console.log('reduce is looking at ', value)
+      // *console.log('its day is ', moment(value.dt_txt).format('M/Do/YYYY'))
       const dataDate = moment(value.dt_txt).format('M/Do/YYYY')
       if(dataDate != futureDay){
-        // add to array
+        // adds the item to the array
         result.push(value)
         // update futureDay to tell us to keep going until we hit a new day 
         futureDay = dataDate
       }
       return result
     }, [])
+    // logs the reduced array of one item for each day
     console.log('reduced data', dailyData)
+
+    if (cardArray.length != 4){
+      for (i=0; i<=4; i++){
+        cardArray[i] = dayCardEl;
+        console.log(cardArray)
+        
+
+      }
+    }
+
+    
+    
 
     // if less than 5 .day-cards, clone the first until theres 5
     // while($('.day-card).length < 5){
