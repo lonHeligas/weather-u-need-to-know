@@ -1,6 +1,6 @@
 # Weather U Need to Know
 
-[Here is a link to the final release of my portfolio for this assignment](https://lonheligas.github.io/weather-u-need-to-know/)
+[Here is a link to the final release of my Weather page for this assignment](https://lonheligas.github.io/weather-u-need-to-know/)
 
 [This is the repository for this challenge](https://github.com/lonHeligas/weather-u-need-to-know)
 
