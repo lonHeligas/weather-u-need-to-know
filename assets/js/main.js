@@ -36,7 +36,6 @@ for (i=0; i<4; i++){
 
 
 
-
 // * pulls from local storage & checks to see if it's empty
 importHistory = localStorage.getItem("cityHistory");
 if(importHistory == null){
@@ -48,10 +47,10 @@ if(importHistory == null){
   }
 
 }
-console.warn("this is the browser history", searchHistory);
+// console.warn("this is the browser history", searchHistory);
 
 
-
+// gets the current day's forecast from the API
 function receiveCurrPayload (response){
   response.json().then(function (data) {
     // ~console.log(data)
@@ -89,7 +88,7 @@ function receiveCurrPayload (response){
 }
 
 
-
+// gets the 5 day forecast information from the API
 function receiveFuturePayload(response){
   dayCardsEl.removeClass('hidden');
   fiveDayTitle.removeClass('hidden');
@@ -133,11 +132,10 @@ function receiveFuturePayload(response){
     // searches the search history array for duplicates
   if (searchHistory.includes(citySearch)){
     // console.log ("no");    
-    // make function that flashes the button that already exists
-    // and tells the user that the city's already been searched
+    // TODO make function that flashes the button that already exists
+    // TODO and tells the user that the city's already been searched
     } else {
     
-
     // console.log(searchHistory);      
     searchHistory.push(citySearch);   
     // console.log ("yes"); 
@@ -145,42 +143,15 @@ function receiveFuturePayload(response){
     addCityButton(data.city.name);
     localStorage.setItem("cityHistory", JSON.stringify(searchHistory));
 
-
-    
-    
-    
   }
   console.log(dayCardsEl);
   console.log(dayCardEl);
-  //while($('.dayCard').length<5){
+  
    
     console.log("hello?");
-
-   
-
-  //}
-    
-
-
-
-    // if less than 5 .day-cards, clone the first until theres 5
-    // while($('.day-card).length < 5){
-    //  $('.day-cards').append($('.day-card').first().clone())
-    //}
-
-    //loop from 0 to 4 on the daily data and populate each div
-    // for(var i = 0; i<4 i++){
-      // populate each field for each data
-    //}
+      //}
   })
-
-
 }
-
-
-
-
-
 
 // gets the weather data from the API
 function getWeatherData(){  
@@ -194,23 +165,11 @@ function getWeatherData(){
   .then(receiveCurrPayload);  
   fetch(forecastApiURL)
   .then(receiveFuturePayload);
-  
-    
+     
   }
-
-  
-
-  
-
-  // $('#live-temperature');
-  // $('#live-windSpeed');
-  // $('#live-humidity');
-  // $('live-city');
-
   // console.log(liveTempEl);
 
-
-
+// adds a city button when you search for a city
 function addCityButton(city=citySearch) {
   btnCity = $('<button class="col-12 mx-auto row btn btn-primary pl-5" id="cityButton"></button>').text(city)  
   btnContainerEl.append(btnCity);  
@@ -224,7 +183,7 @@ function addCityButton(city=citySearch) {
 //    TODO save the city data as localstorage information 
 
 
-
+// listens for you to put in a city and search for it
 function searchButtonListen(){ 
   btnSearch.on('click', function(event){
     event.preventDefault();
@@ -246,7 +205,7 @@ function searchButtonListen(){
   })
 }
 
-
+// waits for you to click on an already searched city button
 function cityButtonListen(){
   // btnCity.on('click', function(event){
     citySearch = $(this).text()
@@ -255,6 +214,5 @@ function cityButtonListen(){
     getWeatherData();
 //   })
 }
-
 
 searchButtonListen();
