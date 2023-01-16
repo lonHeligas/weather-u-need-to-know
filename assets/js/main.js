@@ -212,7 +212,7 @@ function getWeatherData(){
 
 
 function addCityButton(city=citySearch) {
-  btnCity = $('<button class="col-12 mx-auto row btn btn-outline-info pl-5" id="cityButton"></button>').text(city)  
+  btnCity = $('<button class="col-12 mx-auto row btn btn-primary pl-5" id="cityButton"></button>').text(city)  
   btnContainerEl.append(btnCity);  
   btnCity.on("click", cityButtonListen);
   
