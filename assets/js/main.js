@@ -9,11 +9,13 @@ let liveTempEl = $('#live-temperature');
 let liveWindSpeedEl = $('#live-windSpeed');
 let liveHumidityEl = $('#live-humidity');
 
-let futureIconEl = $('future-icon');
-let futureTempEl = $('future-temperature');
-let futureWindSpeedEl = $('future-windSpeed');
-let futureHumidityEl = $('#future-humidity');
-let dayCardEl = $('day-card');
+// let futureDateEl = $('future-date');
+// let futureIconEl = $('future-icon');
+// let futureTempEl = $('future-temperature');
+// let futureWindSpeedEl = $('future-windSpeed');
+// let futureHumidityEl = $('#future-humidity');
+let dayCardEl = $('.day-card');
+let dayCardsEl = $('.day-cards')
 
 //let incomingCityHistory = [];
 let userCitySearch = $('#userCityRequest');
@@ -21,12 +23,14 @@ let btnSearch = $('#searchButton');
 let btnCity = $('#city-button');
 let btnContainerEl = $('#button-container')
 let citySearch;
-let cardArray = [];
+
 let importHistory ="";
 let searchHistory =[];
 let dateRaw = moment();
 
-
+for (i=0; i<4; i++){
+  dayCardsEl.append(dayCardEl.clone());  
+}
 
 
 
@@ -37,16 +41,12 @@ if(importHistory == null){
   searchHistory = [];
 } else {
   searchHistory = JSON.parse(importHistory);
+  for (i=0; i<searchHistory.length; i++){
+    addCityButton(searchHistory[i]);
+  }
+
 }
 console.warn("this is the browser history", searchHistory);
-
-
-// console.log("this is the searchHistory", searchHistory);
-
-  
-
-
-  
 
 
 
@@ -70,6 +70,7 @@ function receiveCurrPayload (response){
 
     var liveIconURL = `http://openweathermap.org/img/w/${liveIconId}.png`;
     
+    
     // ~ console.log(liveCity);
     // ~ console.log(liveTemp);
     // ~ console.log(liveWind);
@@ -85,7 +86,11 @@ function receiveCurrPayload (response){
   })
 }
 
+
+
 function receiveFuturePayload(response){
+  dayCardsEl.removeClass('hidden');
+  
   response.json().then(function (data) {
     // the date we're looking at during the reduce
     let futureDay = ''
@@ -105,13 +110,52 @@ function receiveFuturePayload(response){
     }, [])
     // logs the reduced array of one item for each day
     console.log('reduced data', dailyData)
+    for (n=0; n<5; n++){
+      const dayCard = $('.day-card').eq(n)
+      const dayData = dailyData[n];
+      const futureIconID = dayData.weather[0].icon;
+      const futureIconUrl = `http://openweathermap.org/img/w/${futureIconID}.png`
+      dayCard.find('.future-date').text(moment(dayData.dt_txt).format('M/D/YY'));  
+      dayCard.find('.future-icon').attr('src', futureIconUrl).height("30px").width("30px")    
+      dayCard.find('.future-temperature').text(dayData.main.temp);
+      dayCard.find('.future-windspeed').text(dayData.wind.speed);
+      dayCard.find('.future-humidity').text(dayData.main.humidity);
+      
+      // date/icon/temp/windspeed/humidity
+    }
 
-    // if (cardArray.length < 5){
-    //   while()
-    // }
+    // searches the search history array for duplicates
+  if (searchHistory.includes(citySearch)){
+    // console.log ("no");    
+    // make function that flashes the button that already exists
+    // and tells the user that the city's already been searched
+    } else {
+    
+
+    // console.log(searchHistory);      
+    searchHistory.push(citySearch);   
+    // console.log ("yes"); 
+    // TODO addCityButton();
+    addCityButton(data.city.name);
+    localStorage.setItem("cityHistory", JSON.stringify(searchHistory));
+
 
     
     
+    
+  }
+  console.log(dayCardsEl);
+  console.log(dayCardEl);
+  //while($('.dayCard').length<5){
+   
+    console.log("hello?");
+
+   
+
+  //}
+    
+
+
 
     // if less than 5 .day-cards, clone the first until theres 5
     // while($('.day-card).length < 5){
@@ -140,9 +184,17 @@ function getWeatherData(){
   var forecastApiURL = `https://api.openweathermap.org/data/2.5/forecast?q=${citySearch}&appid=${apiKey}&units=imperial`;
 
   fetch(liveApiURL)
-  .then(receiveCurrPayload);
+  
+  .then(receiveCurrPayload);  
   fetch(forecastApiURL)
   .then(receiveFuturePayload);
+  
+    
+  }
+
+  
+
+  
 
   // $('#live-temperature');
   // $('#live-windSpeed');
@@ -150,11 +202,11 @@ function getWeatherData(){
   // $('live-city');
 
   // console.log(liveTempEl);
-}
 
 
-function addCityButton() {
-  btnCity = $('<button class="row" id="cityButton"></button>').text(citySearch);
+
+function addCityButton(city=citySearch) {
+  btnCity = $('<button class="row" id="cityButton"></button>').text(city);
   btnContainerEl.append(btnCity);  
   btnCity.on("click", cityButtonListen);
   
@@ -179,32 +231,10 @@ function searchButtonListen(){
     
     // gets the API data for the requested city
     getWeatherData(citySearch);
-    
-    // console.log("CitySearch length", citySearch.length);
-    // console.log("Search history length:", searchHistory.length)
-    
-    // searches the search history array for duplicates
-    if (searchHistory.includes(citySearch)){
-      console.log ("no");
-      
-      // make function that flashes the button that already exists
-      // and tells the user that the city's already been searched
 
-    } else {
 
-      console.log(searchHistory);
-      // console.warn("this is the current search history ",searchHistory);
-      searchHistory.push(citySearch);
-      // console.error("this is now the current search history ",searchHistory);
-      // console.log ("yes"); 
-      // TODO addCityButton();
-      
-      
-      // console.log(searchHistory);
-      addCityButton();
-      localStorage.setItem("cityHistory", JSON.stringify(searchHistory));
-      // console.log("helllo?", searchHistory.length);
-    }
+    
+    
     
   })
 }
