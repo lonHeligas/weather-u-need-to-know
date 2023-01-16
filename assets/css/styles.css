@@ -1,15 +1,46 @@
-/* * {
-  background-color: black;
-} */
+* {
+  font-family: 'Jura' sans-serif;
+  color: white;
+  background-color: midnightblue !important;
+}
 
-.outline {
+.day-card .navy-color {
+  background-color: navy !important;
+}
+
+/* .outline {
   outline-style: dashed;
   outline-color: red;
   outline-width: 2px
+} */
+
+.outline-faded {
+  outline-style: dashed;
+  outline-color: blue;
+  outline-width: 2px;
 }
 
-.icon-height {
-  
+.rounded-card {
+  border-radius: 15px 0px 0px 0px;
+}
+
+.rounded-card-lower-left{
+  border-radius:  15px 15px 0px 15px;
+};
+.headline {
+  padding: 20px;   
+}
+/* .search-city{
+  background-color: blue !important;
+} */
+
+
+
+.larger-font {
+  font-size:30px;
+}
+#five-day-title {
+  font-size:25px;
 }
 
 .hidden {

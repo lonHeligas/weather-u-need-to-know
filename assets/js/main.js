@@ -1,5 +1,6 @@
 // globals
 const apiKey = '4f2db4d9e71e8d3d6ecabed5a59fb6e5';
+const fiveDayTitle = $('#five-day-title');
 
 
 // ~ the liveVariables don't need to exist, I think.
@@ -8,6 +9,7 @@ let iconEl = $('#icon');
 let liveTempEl = $('#live-temperature');
 let liveWindSpeedEl = $('#live-windSpeed');
 let liveHumidityEl = $('#live-humidity');
+
 
 // let futureDateEl = $('future-date');
 // let futureIconEl = $('future-icon');
@@ -78,7 +80,7 @@ function receiveCurrPayload (response){
     // ~ console.log(liveIconURL);
 
     // *posts the information to the DOM
-    liveCityEl.text(`${liveCity}  (${dateRaw.format('M/Do/YYYY')})     `);         
+    liveCityEl.text(`${liveCity}  (${dateRaw.format('M/D/YYYY')})     `);         
     iconEl.attr('src', liveIconURL).height("50px").width("50px");          
     liveTempEl.text(`Temp: ${liveTemp} °F`);
     liveWindSpeedEl.text(`Wind: ${liveWind} MPH`);
@@ -90,6 +92,7 @@ function receiveCurrPayload (response){
 
 function receiveFuturePayload(response){
   dayCardsEl.removeClass('hidden');
+  fiveDayTitle.removeClass('hidden');
   
   response.json().then(function (data) {
     // the date we're looking at during the reduce
@@ -99,7 +102,7 @@ function receiveFuturePayload(response){
 
       // *console.log('reduce is looking at ', value)
       // *console.log('its day is ', moment(value.dt_txt).format('M/Do/YYYY'))
-      const dataDate = moment(value.dt_txt).format('M/Do/YYYY')
+      const dataDate = moment(value.dt_txt).format('M/D/YYYY')
       if(dataDate != futureDay){
         // adds the item to the array
         result.push(value)
@@ -108,18 +111,21 @@ function receiveFuturePayload(response){
       }
       return result
     }, [])
+
     // logs the reduced array of one item for each day
     console.log('reduced data', dailyData)
     for (n=0; n<5; n++){
-      const dayCard = $('.day-card').eq(n)
-      const dayData = dailyData[n];
+      const dayCard = $('.day-card').eq(n)  // shortcut for the element
+      const dayData = dailyData[n];         // shortcut for the data array
       const futureIconID = dayData.weather[0].icon;
       const futureIconUrl = `http://openweathermap.org/img/w/${futureIconID}.png`
+
+      // adds the data to the 5 day forecast pages
       dayCard.find('.future-date').text(moment(dayData.dt_txt).format('M/D/YY'));  
       dayCard.find('.future-icon').attr('src', futureIconUrl).height("30px").width("30px")    
-      dayCard.find('.future-temperature').text(dayData.main.temp);
-      dayCard.find('.future-windspeed').text(dayData.wind.speed);
-      dayCard.find('.future-humidity').text(dayData.main.humidity);
+      dayCard.find('.future-temperature').text(`${dayData.main.temp} °F`);
+      dayCard.find('.future-windspeed').text(`${dayData.wind.speed} MPH`);
+      dayCard.find('.future-humidity').text(`Humidity: ${dayData.main.humidity}`);
       
       // date/icon/temp/windspeed/humidity
     }
@@ -206,7 +212,7 @@ function getWeatherData(){
 
 
 function addCityButton(city=citySearch) {
-  btnCity = $('<button class="row" id="cityButton"></button>').text(city);
+  btnCity = $('<button class="col-12 mx-auto row btn btn-outline-info pl-5" id="cityButton"></button>').text(city)  
   btnContainerEl.append(btnCity);  
   btnCity.on("click", cityButtonListen);
   
@@ -223,6 +229,7 @@ function searchButtonListen(){
   btnSearch.on('click', function(event){
     event.preventDefault();
     citySearch = $('#userCityRequest').val();
+    
     
     // console.log(citySearch);
     // console.log('you clicked search!') ;

@@ -20,29 +20,36 @@
       href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap"
       rel="stylesheet"
     />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jura:wght@300;400&display=swap" rel="stylesheet">
+    
+    
     <link rel="stylesheet" href="./assets/css/styles.css" />
   </head>
-  <body>
+  <body class="p-3 mb-2 .bg-dark text-white">
     <!-- top banner -->
-    <header class="container contatiner-fluid outline mb-5 text-dark">
-      <h1>Weather U Need to Know</h1>
+    <header class="container contatiner-fluid mb-5 mh ">
+      <div class="bg-dark">
+        <h1 class="headline">Weather U Need to Know</h1>
+    </div>
     </header>
     <!-- bottom section -->
-    <div class="container outline col-12">
+    <div class=" outline-faded rounded-card container outline col-12">
       <div class="row">
       <!-- lef side panel -->
-      <div class="container column outline col-4">       
-        <div class="row">
+      <div class=" search-city container column outline col-4">       
+        <div class="row mx-auto mt-3">
           <p>search for a city</p>
         </div>
-        <input type="text" class="row" for="city-name" id="userCityRequest" placeholder="Input city name">
-          <p>Search box</p>
+        <input type="text" class="row mx-auto mb-2" for="city-name" id="userCityRequest" placeholder="Input city name">
+          
         </input>
-        <button class="row" id="searchButton">
-          <p>search button</p>
+        <button class="mx-auto col-12 row btn btn-outline-danger mb-0" id="searchButton">
+          <p>Search</p>
         </button>
-        <div class="hr border" id="button-border"></div>
-        <div id="button-container">
+        <div class="hr border mt-2 mb-2" id="button-border"></div>
+        <div id="button-container" class="mt-2 mb-2" >
 
         </div>
         <!-- <button class="row" id="cityButton"> 
@@ -51,19 +58,19 @@
       </div>
       <!-- right side panel -->
       <div class="container column outline col-8">        
-        <div class="row outline">
-          <p id="live-city"></p>
+        <div class=" row outline">
+          <p id="live-city" class="larger-font"></p>
           <img id="icon" class="icon-image icon-height"></img>
           <p id="live-temperature"></p>
           <p id="live-windSpeed"> </p>
           <p id="live-humidity"></p>
         </div>
         <div class="row outline">
-          <p>5-Day Forecast</p>
+          <p id="five-day-title" class="outline-faded rounded-card-lower-left larger-font hidden">5-Day Forecast</p>
         </div>
         <!-- 5 day forecast cards -->
-        <div class="day-cards row outline align-items-left hidden">
-          <div class="day-card container column outline col-2">
+        <div class="bg-info-subtle day-cards row outline align-items-left hidden ">
+          <div class="rounded-card outline-faded day-card container column col-2 bg-info-subtle">
             <p class="future-date"></p>    
             <img class="future-icon icon-image"></img>
             <p class="future-temperature"></p>
