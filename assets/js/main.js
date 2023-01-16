@@ -15,17 +15,16 @@ let futureWindSpeedEl = $('future-windSpeed');
 let futureHumidityEl = $('#future-humidity');
 let dayCardEl = $('day-card');
 
-let searchHistory = localStorage.getItem("cityHistory");
 //let incomingCityHistory = [];
 let userCitySearch = $('#userCityRequest');
 let btnSearch = $('#searchButton');
-let btnCity = $('#cityButton');
+let btnCity = $('#city-button');
+let btnContainerEl = $('#button-container')
 let citySearch;
 let cardArray = [];
-
-
+let importHistory ="";
+let searchHistory =[];
 let dateRaw = moment();
-console.warn("this is the browser history", searchHistory);
 
 
 
@@ -33,15 +32,16 @@ console.warn("this is the browser history", searchHistory);
 
 
 // * pulls from local storage & checks to see if it's empty
-function getCityHistory (){
-  if(searchHistory == null){
-    searchHistory = [];
-  } else {
-    searchHistory = JSON.parse(searchHistory);
-  }
+importHistory = localStorage.getItem("cityHistory");
+if(importHistory == null){
+  searchHistory = [];
+} else {
+  searchHistory = JSON.parse(importHistory);
 }
+console.warn("this is the browser history", searchHistory);
 
-console.log("this is the searchHistory", searchHistory);
+
+// console.log("this is the searchHistory", searchHistory);
 
   
 
@@ -144,13 +144,20 @@ function getWeatherData(){
   fetch(forecastApiURL)
   .then(receiveFuturePayload);
 
-// $('#live-temperature');
-// $('#live-windSpeed');
-// $('#live-humidity');
-// $('live-city');
+  // $('#live-temperature');
+  // $('#live-windSpeed');
+  // $('#live-humidity');
+  // $('live-city');
 
-      // console.log(liveTempEl);
-       
+  // console.log(liveTempEl);
+}
+
+
+function addCityButton() {
+  btnCity = $('<button class="row" id="cityButton"></button>').text(citySearch);
+  btnContainerEl.append(btnCity);  
+  btnCity.on("click", cityButtonListen);
+  
 }
 
 // TODO get the 5 day forecast and build out the day cards
@@ -161,66 +168,56 @@ function getWeatherData(){
 
 
 function searchButtonListen(){ 
-  
-
   btnSearch.on('click', function(event){
     event.preventDefault();
     citySearch = $('#userCityRequest').val();
-
+    
     // console.log(citySearch);
     // console.log('you clicked search!') ;
-
+    
     // TODO store the city name and build the button
-
+    
+    // gets the API data for the requested city
     getWeatherData(citySearch);
+    
     // console.log("CitySearch length", citySearch.length);
     // console.log("Search history length:", searchHistory.length)
     
-    // searches the search history array     
+    // searches the search history array for duplicates
     if (searchHistory.includes(citySearch)){
       console.log ("no");
+      
       // make function that flashes the button that already exists
       // and tells the user that the city's already been searched
+
     } else {
 
-      console.warn("this is the current search history ",searchHistory);
-      searchHi.push(citySearch);
-      console.error("this is now the current search history ",searchHistory);
-      // *console.log ("yes"); 
+      console.log(searchHistory);
+      // console.warn("this is the current search history ",searchHistory);
+      searchHistory.push(citySearch);
+      // console.error("this is now the current search history ",searchHistory);
+      // console.log ("yes"); 
       // TODO addCityButton();
-      // *console.log(searchHistory);
+      
+      
+      // console.log(searchHistory);
+      addCityButton();
       localStorage.setItem("cityHistory", JSON.stringify(searchHistory));
-      // *console.log("helllo?", searchHistory.length);
+      // console.log("helllo?", searchHistory.length);
     }
-    // *console.log(searchHistory)
-    // console.log(searchHistory.length);
-
+    
   })
 }
-
-// function addCityButton(){
-//   for (i=1; 1<=citySearch.length; i++){
-    
-
-
-//     buildCityButtons();
-//   }
-// }
-
-// function buildCityButtons(){
-// }
-
 
 
 function cityButtonListen(){
-  btnCity.on('click', function(event){
-    citySearch = $(this).val()
-    console.log(citySearch);
-  
+  // btnCity.on('click', function(event){
+    citySearch = $(this).text()
+    console.log(citySearch);  
     console.log('you clicked a city button!') ;
-  })
+    getWeatherData();
+//   })
 }
 
 
-cityButtonListen();
 searchButtonListen();
