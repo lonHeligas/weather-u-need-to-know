@@ -16,7 +16,7 @@ let futureHumidityEl = $('#uture-humidity');
 let dayCardEl = $('day-card');
 
 let incomingHistory = localStorage.getItem("cityHistory");
-let incomingCityHistory = [];
+//let incomingCityHistory = [];
 let userCitySearch = $('#userCityRequest');
 let btnSearch = $('#searchButton');
 let btnCity = $('#cityButton');
@@ -25,7 +25,7 @@ let cardArray = [];
 let searchHistory = [];
 
 let dateRaw = moment();
-
+console.warn(incomingHistory);
 
 
 
@@ -34,15 +34,19 @@ let dateRaw = moment();
 
 // * pulls from local storage & checks to see if it's empty
 function getCityHistory (){
-  try{
-    incomingCityHsitory = JSON.parse(incomingCityHistory)
-  } catch(e){
-    searchHistory = [];
-  };
-  console.log(incomingCityHihstory);
-
-  // do the next thing
+  if(incomingHistory == null){
+    incomingHistory = [];
+  } else {
+    searchHistory = JSON.parse(incomingHistory);
+  }
 }
+
+
+  
+  console.log(incomingHistory);
+
+  
+
 
 
 function receiveCurrPayload (response){
@@ -169,27 +173,43 @@ function searchButtonListen(){
     // searches the search history array 
     if (searchHistory.includes(citySearch)){
       // *console.log ("no");
-      
+      // TODO make function that flashes the button that already exists
+      // TODO and tells the user that the city's already been searched
     } else {
       // *console.log ("yes"); 
+      console.error(searchHistory)
       searchHistory.push(citySearch);
-      addCityButton();
+      console.warn(searchHistory);
+      // TODO addCityButton();
       // *console.log(searchHistory);
       localStorage.setItem("cityHistory", JSON.stringify(searchHistory));
-
+      // *console.log("helllo?", searchHistory.length);
     }
-
+    // *console.log(searchHistory)
+    console.log(searchHistory.length);
 
   })
 }
 
 function addCityButton(){
+  for (i=1; 1<=citySearch.length; i++){
+    
 
 
+    buildCityButtons();
+  }
 }
+
+// function buildCityButtons(){
+
+// }
+
+
 
 function cityButtonListen(){
   btnCity.on('click', function(event){
+    citySearch = $(this).val()
+    console.log(citySearch);
   
     console.log('you clicked a city button!') ;
   })
