@@ -7,25 +7,25 @@ let liveCityEl = $('#live-city');
 let iconEl = $('#icon');
 let liveTempEl = $('#live-temperature');
 let liveWindSpeedEl = $('#live-windSpeed');
-let liveHumidityEl = $('live-humidity');
+let liveHumidityEl = $('#live-humidity');
 
 let futureIconEl = $('future-icon');
 let futureTempEl = $('future-temperature');
 let futureWindSpeedEl = $('future-windSpeed');
-let futureHumidityEl = $('#uture-humidity');
+let futureHumidityEl = $('#future-humidity');
 let dayCardEl = $('day-card');
 
-let incomingHistory = localStorage.getItem("cityHistory");
+let searchHistory = localStorage.getItem("cityHistory");
 //let incomingCityHistory = [];
 let userCitySearch = $('#userCityRequest');
 let btnSearch = $('#searchButton');
 let btnCity = $('#cityButton');
-let citySearch = "";
+let citySearch;
 let cardArray = [];
-let searchHistory = [];
+
 
 let dateRaw = moment();
-console.warn(incomingHistory);
+console.warn("this is the browser history", searchHistory);
 
 
 
@@ -34,16 +34,17 @@ console.warn(incomingHistory);
 
 // * pulls from local storage & checks to see if it's empty
 function getCityHistory (){
-  if(incomingHistory == null){
-    incomingHistory = [];
+  if(searchHistory == null){
+    searchHistory = [];
   } else {
-    searchHistory = JSON.parse(incomingHistory);
+    searchHistory = JSON.parse(searchHistory);
   }
 }
 
+console.log("this is the searchHistory", searchHistory);
 
   
-  console.log(incomingHistory);
+
 
   
 
@@ -165,43 +166,48 @@ function searchButtonListen(){
   btnSearch.on('click', function(event){
     event.preventDefault();
     citySearch = $('#userCityRequest').val();
-    // *console.log(citySearch);
-    // *console.log('you clicked search!') ;
+
+    // console.log(citySearch);
+    // console.log('you clicked search!') ;
+
     // TODO store the city name and build the button
-    getWeatherData()
-    citySearch 
-    // searches the search history array 
+
+    getWeatherData(citySearch);
+    // console.log("CitySearch length", citySearch.length);
+    // console.log("Search history length:", searchHistory.length)
+    
+    // searches the search history array     
     if (searchHistory.includes(citySearch)){
-      // *console.log ("no");
-      // TODO make function that flashes the button that already exists
-      // TODO and tells the user that the city's already been searched
+      console.log ("no");
+      // make function that flashes the button that already exists
+      // and tells the user that the city's already been searched
     } else {
+
+      console.warn("this is the current search history ",searchHistory);
+      searchHi.push(citySearch);
+      console.error("this is now the current search history ",searchHistory);
       // *console.log ("yes"); 
-      console.error(searchHistory)
-      searchHistory.push(citySearch);
-      console.warn(searchHistory);
       // TODO addCityButton();
       // *console.log(searchHistory);
       localStorage.setItem("cityHistory", JSON.stringify(searchHistory));
       // *console.log("helllo?", searchHistory.length);
     }
     // *console.log(searchHistory)
-    console.log(searchHistory.length);
+    // console.log(searchHistory.length);
 
   })
 }
 
-function addCityButton(){
-  for (i=1; 1<=citySearch.length; i++){
+// function addCityButton(){
+//   for (i=1; 1<=citySearch.length; i++){
     
 
 
-    buildCityButtons();
-  }
-}
+//     buildCityButtons();
+//   }
+// }
 
 // function buildCityButtons(){
-
 // }
 
 
